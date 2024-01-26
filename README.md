@@ -1,2 +1,2 @@
-# the-travelling-companion
-The official repository of The Travelling Companion - Check the weather as you travel, from anywhere!
+# Travelerrr-JS
+The official repository of Travelerrr - Check the weather as you travel, anywhere you go!
