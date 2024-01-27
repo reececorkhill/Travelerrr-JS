@@ -5,7 +5,8 @@ $(document).ready(function() {
 
         var cityName = $("#search-input").val().trim();                                                                                             // Taking user input value and removing whitespace.
         var apiKey = "a9c66b40cb4e146f6ec43b344359e309";                                                                                            // OpenWeatherMap API Key.
-        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&mode=json&units=metric&appid=" + apiKey;                 // Setting the query URL following API docs spec and specifying metric units of measure.
+
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&mode=json&units=metric&appid=" + apiKey;                 // Setting the query URL following API docs spec for today's weather call and specifying metric units of measure.
 
         fetch(queryURL)                                                                                                                             // Performing a fetch call on the queryURL.
         .then(function (response) {                                                                                                                 // Convering the response to JSON.
@@ -58,8 +59,31 @@ $(document).ready(function() {
 
     }
 
+    // Function to display the 5 day weather forecast based on the city the user searches for.
+    function displayForecast () {
+
+        var forecastCityName = $("#search-input").val().trim();                                                                                     // Taking user input value and removing whitespace.
+        var apiKey = "a9c66b40cb4e146f6ec43b344359e309";                                                                                            // OpenWeatherMap API Key.
+
+        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + forecastCityName + "&mode=json&units=metric&appid=" + apiKey;        // Setting the query URL following API docs spec for forecast call and specifying metric units of measure.
+
+        fetch(queryURL)                                                                                                                             // Performing a fetch call on the queryURL.
+        .then(function (response) {                                                                                                                 // Convering the response to JSON.
+            return response.json();                                                                                                                 
+        })
+        .then(function (data) {                                                                                                                     // Accessing the returned data after being converted.
+            for (var i = 0; i < data.list.length; i++) {
+                if (data.list[i].dt_txt.includes("00:00:00")) {
+                    var eachDate = dayjs.unix(data.list[i].dt).format("DD-MM-YYYY"); 
+                    console.log(eachDate)
+                }
+            }
+        });
+    }
+
     $("#search-button").on("click", function (event) {                                                                                              // Function to handle events when search button is clicked.
         event.preventDefault();                                                                                                                     // Preventing default behaviour.
         displayWeatherToday();                                                                                                                      // Calling the displayWeatherToday function.
+        displayForecast();                                                                                                                          // Calling the displayForecast function.
     });
 });
