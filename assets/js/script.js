@@ -72,10 +72,21 @@ $(document).ready(function() {
             return response.json();                                                                                                                 
         })
         .then(function (data) {                                                                                                                     // Accessing the returned data after being converted.
-            for (var i = 0; i < data.list.length; i++) {
-                if (data.list[i].dt_txt.includes("00:00:00")) {
-                    var eachDate = dayjs.unix(data.list[i].dt).format("DD-MM-YYYY"); 
-                    console.log(eachDate)
+            for (var i = 0; i < data.list.length; i++) {                                                                                            // Iterating through the data one by one.
+                if (data.list[i].dt_txt.includes("00:00:00")) {                                                                                     // Checking if the the date/time text includes 00:00:00 - to make sure we're only getting 5 days.
+                    console.log(data.list[i]);
+                    var eachDate = dayjs.unix(data.list[i].dt).format("DD-MM-YYYY");                                                                // Setting the eachDate variable to the unix timestamp from data iteration and formatting it using dayJS.
+                    console.log(eachDate);
+                    var eachIcon = (data.list[i].weather[0].icon);                                                                                  // Setting the eachIcon variable to the icon code from data iteration.
+                    console.log(eachIcon);
+                    var eachIconLink = ("https://openweathermap.org/img/wn/" + eachIcon + "@2x.png");                                               // Setting the eachIconLink variable to the docs' icon search link using the eachIcon code from data iteration.
+                    console.log(eachIconLink);
+                    var eachTemp = (data.list[i].main.temp.toFixed(1));                                                                             // Setting the eachTemp variable to the temp from data iteration and specifying it to 1 decimal place.
+                    console.log(eachTemp);
+                    var eachWind = (data.list[i].wind.speed.toFixed(0));                                                                            // Setting the eachWind variable to the wind from data iteration and specifying it to 0 decimal places.
+                    console.log(eachWind);
+                    var eachHumidity = (data.list[i].main.humidity);                                                                                // Setting the eachHumidity variable to the humidity from data iteration.
+                    console.log(eachHumidity)
                 }
             }
         });
