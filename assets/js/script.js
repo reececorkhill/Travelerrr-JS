@@ -15,7 +15,7 @@ $(document).ready(function() {
             return response.json();                                                                                                                 
         })
         .then(function (data) {                                                                                                                     // Accessing the returned data after being converted.
-
+            $("#today").empty();                                                                                                                    // Clear the today div.
             var cityName = (data.name);                                                                                                             // Setting the cityName variable to the name from data.
             var forecastDate = dayjs.unix(data.dt).format("DD-MM-YYYY");                                                                            // Setting the forcastDate variable to the unix timestamp from data and formatting it using dayJS.
             var forecastIcon = (data.weather[0].icon);                                                                                              // Setting the forcastIcon variable to the icon code from data.
@@ -183,6 +183,7 @@ $(document).ready(function() {
         var newCityName = $("#search-input").val().trim();                                                                                          // Setting the newCityName variable to the search input box value and removing whitespace.
         if (newCityName !== "") {                                                                                                                   // Only running the following code if the input box is not empty.
             displayWeatherToday();                                                                                                                  // Calling the displayWeatherToday function.
+            $("#forecast").empty();                                                                                                                 // Clear the forecast div.
             $("#forecast").css({"display":"flex", "justify-content":"space-between"});                                                              // Making the forecast div use flex and space the content within between.
             var forecastH4 = $("<h4>");                                                                                                             // Creating a h4 tag.
             forecastH4.text("5-Day Forecast");                                                                                                      // Setting the text of the h4 tag.
