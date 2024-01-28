@@ -141,6 +141,9 @@ $(document).ready(function() {
         event.preventDefault();                                                                                                                     // Preventing default behaviour.
         displayWeatherToday();                                                                                                                      // Calling the displayWeatherToday function.
         $("#forecast").css({"display":"flex", "justify-content":"space-between"});                                                                  // Making the forecast div use flex and space the content within between.
+        var forecastH5 = $("<h4>");
+        forecastH5.text("5-Day Forecast");
+        $("#forecast").append(forecastH5);
         displayForecast();                                                                                                                          // Calling the displayForecast function.
     });
 });
