@@ -157,18 +157,24 @@ $(document).ready(function() {
 
         var newCities = [...existingCities, cityObject];                                                                                            // Creates newCities array by spreading the elements of existingCities and adding cityObject to the end.
         localStorage.setItem("savedCities", JSON.stringify(newCities));                                                                             // Converts newCities to a string and stores it in local storage with the key "savedCities".
-        console.log(existingCities); // <----------- This is the array we need to iterate through to get each cityText value for each button!
-        // var existingCities = JSON.parse(localStorage.getItem("savedCities")); <------------ Like this...
     }
 
     // Function to display previously searched cities from local storage as buttons.
     function displayButtons () {
-        // For loop to go here - to iterate through local storage array.
-        var searchHistoryButton = $("<button>");                                                                                                    // Setting the searchHistoryButton element.
-        searchHistoryButton.addClass("btn btn-primary col-12 mt-2");                                                                                // Adding bootstrap classes.
-        searchHistoryButton.attr("id", "previous-search");                                                                                          // Adding an id of previous-search.
-        searchHistoryButton.text("Testing Button");                                                                                                 // Applying PLACEHOLDER text <----------------- THIS IS TO BE REPLACED BY LOCALSTORAGE ITEMS!
-        $("#history").append(searchHistoryButton);                                                                                                  // Appening the searchHistoryButton to the history div.
+        var existingCities = JSON.parse(localStorage.getItem("savedCities"));                                                                       // Getting savedCities from localstorage and parsing it.
+        
+        if (existingCities !== null) {                                                                                                              // If the array is empty (null):
+            $("#history").empty();                                                                                                                  // Clear the history div.
+            for (var i = 0; i < existingCities.length; i++) {                                                                                       // Iterate through the exisitingCities array.
+                var searchHistoryButton = $("<button>");                                                                                            // Setting the searchHistoryButton element.
+                searchHistoryButton.addClass("btn btn-primary col-12 mt-2");                                                                        // Adding bootstrap classes.
+                searchHistoryButton.attr("id", "previous-search");                                                                                  // Adding an id of previous-search.
+                searchHistoryButton.text(existingCities[i].cityText);                                                                               // Applying the cityText to the button.
+                $("#history").append(searchHistoryButton);                                                                                          // Appening the searchHistoryButton to the history div.
+            }; 
+        } else {                                                                                                                                    // If the existingCities array is null, return.
+            return;
+        };    
     }
 
     // Function to handle events when search button is clicked.
@@ -183,6 +189,7 @@ $(document).ready(function() {
             $("#forecast").append(forecastH4);                                                                                                      // Appending the h4 tag to the forecast div.
             displayForecast();                                                                                                                      // Calling the displayForecast function. 
             saveCity();                                                                                                                             // Calling the saveCity function.
+            displayButtons();                                                                                                                       // Calling the displayButtons function.  
         } else {                                                                                                                                    // If the newCityName input box is empty:
             alert("Please enter a city before searching!");                                                                                         // Alert the user they must enter a city in the input box.
             return;
