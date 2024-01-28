@@ -46,7 +46,7 @@ $(document).ready(function() {
 
             // Wind Forecast
             var todaysForecastWind = $("<p>");                                                                                                      // Creating a p element for the wind value.
-            todaysForecastWind.text("Wind: " + forecastWind + " /mph");                                                                             // Setting the p text to show the wind with miles per hour added on.
+            todaysForecastWind.text("Wind: " + forecastWind + "/mph");                                                                              // Setting the p text to show the wind with miles per hour added on.
             todaysForecastDiv.append(todaysForecastWind);                                                                                           // Appending the p element to todaysForecastDiv.
 
             // Humidity Forecast
@@ -74,6 +74,7 @@ $(document).ready(function() {
         .then(function (data) {                                                                                                                     // Accessing the returned data after being converted.
             for (var i = 0; i < data.list.length; i++) {                                                                                            // Iterating through the data one by one.
                 if (data.list[i].dt_txt.includes("00:00:00")) {                                                                                     // Checking if the the date/time text includes 00:00:00 - to make sure we're only getting 5 days.
+
                     console.log(data.list[i]);
                     var eachDate = dayjs.unix(data.list[i].dt).format("DD-MM-YYYY");                                                                // Setting the eachDate variable to the unix timestamp from data iteration and formatting it using dayJS.
                     console.log(eachDate);
@@ -87,6 +88,50 @@ $(document).ready(function() {
                     console.log(eachWind);
                     var eachHumidity = (data.list[i].main.humidity);                                                                                // Setting the eachHumidity variable to the humidity from data iteration.
                     console.log(eachHumidity)
+
+                    // 5-day Forecast Grid Layout
+                    var multiDayForecastGrid = $("<div>");
+                    multiDayForecastGrid.addClass("col-sm-12 col-md-12 col-lg-2");
+
+                    // 5-day Forecast Cards
+                    var multiDayForecastCard = $("<div>");
+                    multiDayForecastCard.addClass("card");
+                    multiDayForecastCard.css({"height":"450px", "width":"auto"});
+                    multiDayForecastGrid.append(multiDayForecastCard);
+
+                    // 5-day Forecast Card Body's
+                    var multiDayForecastCardBody = $("<div>");
+                    multiDayForecastCardBody.addClass("card-body");
+                    multiDayForecastCardBody.css({"text-align":"center"})
+                    multiDayForecastCard.append(multiDayForecastCardBody);
+
+                    // 5-day Forecast Card Title
+                    var multiDayForecastCardTitle = $("<h5>");
+                    multiDayForecastCardTitle.addClass("card-title");
+                    multiDayForecastCardTitle.text("(" + eachDate + ")");
+                    multiDayForecastCardBody.append(multiDayForecastCardTitle);
+
+                    // 5-day Forecast Card Icon
+                    var multiDayForecastCardIcon = $(`<img src="${eachIconLink}">`);
+                    multiDayForecastCardIcon.css({"height":"75px", "width":"75px"});
+                    multiDayForecastCardBody.append(multiDayForecastCardIcon);
+
+                    // 5-day Forecast Card Temp
+                    var multiDayForecastCardTemp = $("<p>");
+                    multiDayForecastCardTemp.text("Temp: " + eachTemp + " °C")
+                    multiDayForecastCardBody.append(multiDayForecastCardTemp);
+
+                    // 5-day Forecast Card Wind
+                    var multiDayForecastCardWind = $("<p>");
+                    multiDayForecastCardWind.text("Wind: " + eachWind + "/mph")
+                    multiDayForecastCardBody.append(multiDayForecastCardWind);
+
+                    // 5-day Forecast Card Humidity
+                    var multiDayForecastCardHumidity = $("<p>");
+                    multiDayForecastCardHumidity.text("Humidity: " + eachHumidity + "%")
+                    multiDayForecastCardBody.append(multiDayForecastCardHumidity);
+
+                    $("#forecast").append(multiDayForecastGrid);
                 }
             }
         });
@@ -95,6 +140,7 @@ $(document).ready(function() {
     $("#search-button").on("click", function (event) {                                                                                              // Function to handle events when search button is clicked.
         event.preventDefault();                                                                                                                     // Preventing default behaviour.
         displayWeatherToday();                                                                                                                      // Calling the displayWeatherToday function.
+        $("#forecast").css({"display":"flex", "justify-content":"space-between"});                                                                  // Making the forecast div use flex and space the content within between.
         displayForecast();                                                                                                                          // Calling the displayForecast function.
     });
 });
