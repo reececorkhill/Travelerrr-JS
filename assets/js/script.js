@@ -138,9 +138,32 @@ $(document).ready(function() {
         });
     }
 
+    // Function to save city names to localstorage.
+    function saveCity() {
+        var newCityName = $("#search-input").val().trim();
+        var existingCities = JSON.parse(localStorage.getItem("savedCities"));
+
+        if (newCityName !== "") {
+            var cityText = newCityName;
+            var cityObject = {cityText};
+        } else {
+            alert("Please enter a city before searching!");
+            return;
+        };
+
+        if (!existingCities) {
+            existingCities = [];
+        };
+
+        var newCities = [...existingCities, cityObject];
+        localStorage.setItem("savedCities", JSON.stringify(newCities));
+        console.log(existingCities); // <----------- This is the array we need to iterate through to get each cityText value for each button!
+        // var existingCities = JSON.parse(localStorage.getItem("savedCities")); <------------ Like this...
+    }
+
     // Function to display previously searched cities from local storage as buttons.
     function displayButtons () {
-
+        // For loop to go here - to iterate through local storage array.
         var searchHistoryButton = $("<button>");                                                                                                    // Setting the searchHistoryButton element.
         searchHistoryButton.addClass("btn btn-primary col-12 mt-2");                                                                                // Adding bootstrap classes.
         searchHistoryButton.attr("id", "previous-search");                                                                                          // Adding an id of previous-search.
@@ -151,11 +174,18 @@ $(document).ready(function() {
     // Function to handle events when search button is clicked.
     $("#search-button").on("click", function (event) {
         event.preventDefault();                                                                                                                     // Preventing default behaviour.
-        displayWeatherToday();                                                                                                                      // Calling the displayWeatherToday function.
-        $("#forecast").css({"display":"flex", "justify-content":"space-between"});                                                                  // Making the forecast div use flex and space the content within between.
-        var forecastH4 = $("<h4>");                                                                                                                 // Creating a h4 tag.
-        forecastH4.text("5-Day Forecast");                                                                                                          // Setting the text of the h4 tag.
-        $("#forecast").append(forecastH4);                                                                                                          // Appending the h4 tag to the forecast div.
-        displayForecast();                                                                                                                          // Calling the displayForecast function.
+        var newCityName = $("#search-input").val().trim();                                                                                          // Setting the newCityName variable to the search input box value and removing whitespace.
+        if (newCityName !== "") {                                                                                                                   // Only running the following code if the input box is not empty.
+            displayWeatherToday();                                                                                                                  // Calling the displayWeatherToday function.
+            $("#forecast").css({"display":"flex", "justify-content":"space-between"});                                                              // Making the forecast div use flex and space the content within between.
+            var forecastH4 = $("<h4>");                                                                                                             // Creating a h4 tag.
+            forecastH4.text("5-Day Forecast");                                                                                                      // Setting the text of the h4 tag.
+            $("#forecast").append(forecastH4);                                                                                                      // Appending the h4 tag to the forecast div.
+            displayForecast();                                                                                                                      // Calling the displayForecast function. 
+            saveCity();                                                                                                                             // Calling the saveCity function.
+        } else {                                                                                                                                    // If the newCityName input box is empty:
+            alert("Please enter a city before searching!");                                                                                         // Alert the user they must enter a city in the input box.
+            return;
+        }
     });
 });
