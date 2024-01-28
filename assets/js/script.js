@@ -140,23 +140,23 @@ $(document).ready(function() {
 
     // Function to save city names to localstorage.
     function saveCity() {
-        var newCityName = $("#search-input").val().trim();
-        var existingCities = JSON.parse(localStorage.getItem("savedCities"));
+        var newCityName = $("#search-input").val().trim();                                                                                          // Setting the newCityName variable to the search input box value and removing whitespace.
+        var existingCities = JSON.parse(localStorage.getItem("savedCities"));                                                                       // Declaring existingCities variable which gets savedCities from localstorage and parses it.
 
-        if (newCityName !== "") {
-            var cityText = newCityName;
-            var cityObject = {cityText};
-        } else {
-            alert("Please enter a city before searching!");
+        if (newCityName !== "") {                                                                                                                   // Checking that the user has entered something in the newCityName input box.
+            var cityText = newCityName;                                                                                                             // Declaring cityText variable to the value of the newCityName input box.
+            var cityObject = {cityText};                                                                                                            // Declaring cityObject variable which will store the cityText in an object.
+        } else {                                                                                                                                    // If the newCityName input box is empty:
+            alert("Please enter a city before searching!");                                                                                         // Alert the user they must enter a city in the input box.
             return;
         };
 
-        if (!existingCities) {
-            existingCities = [];
+        if (!existingCities) {                                                                                                                      // If existingUserTasks is falsy.
+            existingCities = [];                                                                                                                    // Set existingCities to an empty array.
         };
 
-        var newCities = [...existingCities, cityObject];
-        localStorage.setItem("savedCities", JSON.stringify(newCities));
+        var newCities = [...existingCities, cityObject];                                                                                            // Creates newCities array by spreading the elements of existingCities and adding cityObject to the end.
+        localStorage.setItem("savedCities", JSON.stringify(newCities));                                                                             // Converts newCities to a string and stores it in local storage with the key "savedCities".
         console.log(existingCities); // <----------- This is the array we need to iterate through to get each cityText value for each button!
         // var existingCities = JSON.parse(localStorage.getItem("savedCities")); <------------ Like this...
     }
