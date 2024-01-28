@@ -142,7 +142,7 @@ $(document).ready(function() {
         $("#forecast").css({"display":"flex", "justify-content":"space-between"});                                                                  // Making the forecast div use flex and space the content within between.
         var forecastH4 = $("<h4>");                                                                                                                 // Creating a h4 tag.
         forecastH4.text("5-Day Forecast");                                                                                                          // Setting the text of the h4 tag.
-        $("#forecast").append(forecastH5);                                                                                                          // Appending the h4 tag to the forecast div.
+        $("#forecast").append(forecastH4);                                                                                                          // Appending the h4 tag to the forecast div.
         displayForecast();                                                                                                                          // Calling the displayForecast function.
     });
 });
