@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    
+    displayButtons();                                                                                                                               // Calling the display button function to display previously searched cities from local storage.
 
     // Function to display the weather today based on the city the user searches for.
     function displayWeatherToday () {
@@ -136,7 +138,18 @@ $(document).ready(function() {
         });
     }
 
-    $("#search-button").on("click", function (event) {                                                                                              // Function to handle events when search button is clicked.
+    // Function to display previously searched cities from local storage as buttons.
+    function displayButtons () {
+
+        var searchHistoryButton = $("<button>");                                                                                                    // Setting the searchHistoryButton element.
+        searchHistoryButton.addClass("btn btn-primary col-12 mt-2");                                                                                // Adding bootstrap classes.
+        searchHistoryButton.attr("id", "previous-search");                                                                                          // Adding an id of previous-search.
+        searchHistoryButton.text("Testing Button");                                                                                                 // Applying PLACEHOLDER text <----------------- THIS IS TO BE REPLACED BY LOCALSTORAGE ITEMS!
+        $("#history").append(searchHistoryButton);                                                                                                  // Appening the searchHistoryButton to the history div.
+    }
+
+    // Function to handle events when search button is clicked.
+    $("#search-button").on("click", function (event) {
         event.preventDefault();                                                                                                                     // Preventing default behaviour.
         displayWeatherToday();                                                                                                                      // Calling the displayWeatherToday function.
         $("#forecast").css({"display":"flex", "justify-content":"space-between"});                                                                  // Making the forecast div use flex and space the content within between.
