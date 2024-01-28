@@ -90,48 +90,47 @@ $(document).ready(function() {
                     console.log(eachHumidity)
 
                     // 5-day Forecast Grid Layout
-                    var multiDayForecastGrid = $("<div>");
-                    multiDayForecastGrid.addClass("col-sm-12 col-md-12 col-lg-2");
+                    var multiDayForecastGrid = $("<div>");                                                                                          // Setting the Forecast Area Grid Div.
+                    multiDayForecastGrid.addClass("col-sm-12 col-md-12 col-lg-2");                                                                  // Adding classes for column sizing.
 
                     // 5-day Forecast Cards
-                    var multiDayForecastCard = $("<div>");
-                    multiDayForecastCard.addClass("card");
-                    multiDayForecastCard.css({"height":"450px", "width":"auto"});
-                    multiDayForecastGrid.append(multiDayForecastCard);
+                    var multiDayForecastCard = $("<div>");                                                                                          // Setting the Forecast Cards.
+                    multiDayForecastCard.addClass("card");                                                                                          // Adding bootstrap class - card.
+                    multiDayForecastGrid.append(multiDayForecastCard);                                                                              // Appening the card to the grid.
 
                     // 5-day Forecast Card Body's
-                    var multiDayForecastCardBody = $("<div>");
-                    multiDayForecastCardBody.addClass("card-body");
-                    multiDayForecastCardBody.css({"text-align":"center"})
-                    multiDayForecastCard.append(multiDayForecastCardBody);
+                    var multiDayForecastCardBody = $("<div>");                                                                                      // Setting the Forecast Cards' Body.
+                    multiDayForecastCardBody.addClass("card-body");                                                                                 // Adding bootstrap class - card-body.
+                    multiDayForecastCardBody.css({"text-align":"center"})                                                                           // Adding css to centre align content.
+                    multiDayForecastCard.append(multiDayForecastCardBody);                                                                          // Appending the card body to the forecast card.
 
                     // 5-day Forecast Card Title
-                    var multiDayForecastCardTitle = $("<h5>");
-                    multiDayForecastCardTitle.addClass("card-title");
-                    multiDayForecastCardTitle.text("(" + eachDate + ")");
-                    multiDayForecastCardBody.append(multiDayForecastCardTitle);
+                    var multiDayForecastCardTitle = $("<h5>");                                                                                      // Setting the Forecast Cards' Title.
+                    multiDayForecastCardTitle.addClass("card-title");                                                                               // Adding bootstrap class - card-title.
+                    multiDayForecastCardTitle.text("(" + eachDate + ")");                                                                           // Adding the eachDate variable to the title text.
+                    multiDayForecastCardBody.append(multiDayForecastCardTitle);                                                                     // Appening the card title to the forecast card body.
 
                     // 5-day Forecast Card Icon
-                    var multiDayForecastCardIcon = $(`<img src="${eachIconLink}">`);
-                    multiDayForecastCardIcon.css({"height":"75px", "width":"75px"});
-                    multiDayForecastCardBody.append(multiDayForecastCardIcon);
+                    var multiDayForecastCardIcon = $(`<img src="${eachIconLink}">`);                                                                // Setting the Forecast Cards' Weather Icon.
+                    multiDayForecastCardIcon.css({"height":"75px", "width":"75px"});                                                                // Adding css to change the icon size.
+                    multiDayForecastCardBody.append(multiDayForecastCardIcon);                                                                      // Appending the weather icon to the card body.
 
                     // 5-day Forecast Card Temp
-                    var multiDayForecastCardTemp = $("<p>");
-                    multiDayForecastCardTemp.text("Temp: " + eachTemp + " °C")
-                    multiDayForecastCardBody.append(multiDayForecastCardTemp);
+                    var multiDayForecastCardTemp = $("<p>");                                                                                        // Setting the Forecast Cards' Temp.
+                    multiDayForecastCardTemp.text("Temp: " + eachTemp + " °C")                                                                      // Adding the eachTemp variable to the temp text.
+                    multiDayForecastCardBody.append(multiDayForecastCardTemp);                                                                      // Appending the card temp to the forecast card body.
 
                     // 5-day Forecast Card Wind
-                    var multiDayForecastCardWind = $("<p>");
-                    multiDayForecastCardWind.text("Wind: " + eachWind + "/mph")
-                    multiDayForecastCardBody.append(multiDayForecastCardWind);
+                    var multiDayForecastCardWind = $("<p>");                                                                                        // Setting the Forecast Cards' Wind.
+                    multiDayForecastCardWind.text("Wind: " + eachWind + "/mph")                                                                     // Adding the eachWind variable to the wind text.
+                    multiDayForecastCardBody.append(multiDayForecastCardWind);                                                                      // Appending the card wind to the forecast card body.
 
                     // 5-day Forecast Card Humidity
-                    var multiDayForecastCardHumidity = $("<p>");
-                    multiDayForecastCardHumidity.text("Humidity: " + eachHumidity + "%")
-                    multiDayForecastCardBody.append(multiDayForecastCardHumidity);
+                    var multiDayForecastCardHumidity = $("<p>");                                                                                    // Setting the Forecast Cards' Humidity.
+                    multiDayForecastCardHumidity.text("Humidity: " + eachHumidity + "%")                                                            // Adding the eachHumidity variable to the humidity text.
+                    multiDayForecastCardBody.append(multiDayForecastCardHumidity);                                                                  // Appending the card humidity to the forecast card body.
 
-                    $("#forecast").append(multiDayForecastGrid);
+                    $("#forecast").append(multiDayForecastGrid);                                                                                    // Appending the multiDayForecastGrid to the forecast div.
                 }
             }
         });
@@ -141,9 +140,9 @@ $(document).ready(function() {
         event.preventDefault();                                                                                                                     // Preventing default behaviour.
         displayWeatherToday();                                                                                                                      // Calling the displayWeatherToday function.
         $("#forecast").css({"display":"flex", "justify-content":"space-between"});                                                                  // Making the forecast div use flex and space the content within between.
-        var forecastH5 = $("<h4>");
-        forecastH5.text("5-Day Forecast");
-        $("#forecast").append(forecastH5);
+        var forecastH4 = $("<h4>");                                                                                                                 // Creating a h4 tag.
+        forecastH4.text("5-Day Forecast");                                                                                                          // Setting the text of the h4 tag.
+        $("#forecast").append(forecastH5);                                                                                                          // Appending the h4 tag to the forecast div.
         displayForecast();                                                                                                                          // Calling the displayForecast function.
     });
 });
