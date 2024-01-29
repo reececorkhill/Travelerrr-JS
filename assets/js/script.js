@@ -167,8 +167,7 @@ $(document).ready(function() {
             $("#history").empty();                                                                                                                  // Clear the history div.
             for (var i = 0; i < existingCities.length; i++) {                                                                                       // Iterate through the exisitingCities array.
                 var searchHistoryButton = $("<button>");                                                                                            // Setting the searchHistoryButton element.
-                searchHistoryButton.addClass("btn btn-primary col-12 mt-2");                                                                        // Adding bootstrap classes.
-                searchHistoryButton.attr("id", "previous-search");                                                                                  // Adding an id of previous-search.
+                searchHistoryButton.addClass("btn btn-primary col-12 mt-2 previous-search");                                                        // Adding bootstrap classes and giving a class of previous-search.
                 searchHistoryButton.text(existingCities[i].cityText);                                                                               // Applying the cityText to the button.
                 $("#history").append(searchHistoryButton);                                                                                          // Appening the searchHistoryButton to the history div.
             }; 
@@ -196,4 +195,14 @@ $(document).ready(function() {
             return;
         }
     });
+
+    $(".previous-search").on("click", function (event) {
+        event.preventDefault();
+        var cityName = $(this).text();    
+        var forecastCityName = $(this).text(); 
+        $("#today").empty();
+        $("#forecast").empty();
+        console.log(cityName)
+        console.log(forecastCityName)
+    })
 });
