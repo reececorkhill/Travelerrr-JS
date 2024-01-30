@@ -22,7 +22,7 @@ N/A
 
 Plan your travels efficiently and avoid the rain with <a href="https://reececorkhill.github.io/Travelerrr-JS/"> Travelerrr</a>!
 
-![Screenshot of Travelerrr application.](assets/images/travelerrr-js.png)
+![Screenshot of Travelerrr application.](assets/images/travelerrr-js.PNG)
 
 ## Credits
 
