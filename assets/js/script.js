@@ -3,12 +3,15 @@ $(document).ready(function() {
     displayButtons();                                                                                                                               // Calling the display button function to display previously searched cities from local storage.
 
     // Function to display the weather today based on the city the user searches for.
-    function displayWeatherToday () {
+    function displayWeatherToday (cityName) {
 
-        var cityName = $("#search-input").val().trim();                                                                                             // Taking user input value and removing whitespace.
+        var userInputCity = $("#search-input").val().trim();                                                                                             // Taking user input value and removing whitespace.
         var apiKey = "a9c66b40cb4e146f6ec43b344359e309";                                                                                            // OpenWeatherMap API Key.
-
-        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&mode=json&units=metric&appid=" + apiKey;                 // Setting the query URL following API docs spec for today's weather call and specifying metric units of measure.
+        if (userInputCity === "") {
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&mode=json&units=metric&appid=" + apiKey;
+        } else {
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + userInputCity + "&mode=json&units=metric&appid=" + apiKey;                 // Setting the query URL following API docs spec for today's weather call and specifying metric units of measure.
+        }
 
         fetch(queryURL)                                                                                                                             // Performing a fetch call on the queryURL.
         .then(function (response) {                                                                                                                 // Convering the response to JSON.
@@ -18,6 +21,7 @@ $(document).ready(function() {
             $("#today").empty();                                                                                                                    // Clear the today div.
             var cityName = (data.name);                                                                                                             // Setting the cityName variable to the name from data.
             var forecastDate = dayjs.unix(data.dt).format("DD-MM-YYYY");                                                                            // Setting the forcastDate variable to the unix timestamp from data and formatting it using dayJS.
+            console.log(data)
             var forecastIcon = (data.weather[0].icon);                                                                                              // Setting the forcastIcon variable to the icon code from data.
             var forcastIconLink = ("https://openweathermap.org/img/wn/" + forecastIcon + "@2x.png");                                                // Setting the forecastIconLink variable to the docs' icon search link using the forecastIcon code from data.
             var forecastTemp = (data.main.temp.toFixed(1));                                                                                         // Setting the forecastTemp variable to the temp from data and specifying it to 1 decimal place.
@@ -62,23 +66,29 @@ $(document).ready(function() {
     }
 
     // Function to display the 5 day weather forecast based on the city the user searches for.
-    function displayForecast () {
+    function displayForecast (forecastCityName) {
 
-        var forecastCityName = $("#search-input").val().trim();                                                                                     // Taking user input value and removing whitespace.
+        var userInputForecastCity = $("#search-input").val().trim();                                                                                     // Taking user input value and removing whitespace.
         var apiKey = "a9c66b40cb4e146f6ec43b344359e309";                                                                                            // OpenWeatherMap API Key.
 
-        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + forecastCityName + "&mode=json&units=metric&appid=" + apiKey;        // Setting the query URL following API docs spec for forecast call and specifying metric units of measure.
+        if (userInputForecastCity !== "") {
+            var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + userInputForecastCity + "&mode=json&units=metric&appid=" + apiKey; // Setting the query URL following API docs spec for forecast call and specifying metric units of measure.
+        } else {
+            var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + forecastCityName + "&mode=json&units=metric&appid=" + apiKey; // Setting the query URL following API docs spec for forecast call and specifying metric units of measure.
+        };
 
         fetch(queryURL)                                                                                                                             // Performing a fetch call on the queryURL.
         .then(function (response) {                                                                                                                 // Convering the response to JSON.
             return response.json();                                                                                                                 
         })
         .then(function (data) {                                                                                                                     // Accessing the returned data after being converted.
+            console.log(data)
             for (var i = 0; i < data.list.length; i++) {                                                                                            // Iterating through the data one by one.
                 if (data.list[i].dt_txt.includes("00:00:00")) {                                                                                     // Checking if the the date/time text includes 00:00:00 - to make sure we're only getting 5 days.
 
                     console.log(data.list[i]);
                     var eachDate = dayjs.unix(data.list[i].dt).format("DD-MM-YYYY");                                                                // Setting the eachDate variable to the unix timestamp from data iteration and formatting it using dayJS.
+                    console.log(data)
                     console.log(eachDate);
                     var eachIcon = (data.list[i].weather[0].icon);                                                                                  // Setting the eachIcon variable to the icon code from data iteration.
                     console.log(eachIcon);
@@ -194,15 +204,18 @@ $(document).ready(function() {
             alert("Please enter a city before searching!");                                                                                         // Alert the user they must enter a city in the input box.
             return;
         }
+        $("#search-input").val('');
     });
 
-    $(".previous-search").on("click", function (event) {
+    $("#history").on("click", function (event) {
+        console.log("Test")
+        if (!$(event.target).hasClass('btn')) return;
         event.preventDefault();
-        var cityName = $(this).text();    
-        var forecastCityName = $(this).text(); 
+        var cityName = $(event.target).text();
+        var forecastCityName = $(event.target).text();
         $("#today").empty();
         $("#forecast").empty();
-        console.log(cityName)
-        console.log(forecastCityName)
-    })
+        displayWeatherToday(cityName);
+        displayForecast(forecastCityName);
+    });
 });
