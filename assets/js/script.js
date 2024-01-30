@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    
+    $("body").css({"background-color":"#F0F8FF"});
     displayButtons();                                                                                                                               // Calling the display button function to display previously searched cities from local storage.
 
     // Function to display the weather today based on the city the user searches for.
@@ -29,7 +29,7 @@ $(document).ready(function() {
             var forecastHumidity = (data.main.humidity);                                                                                            // Setting the forecastHumidity variable to the humidity from data.
 
             var todaysForecastDiv = $("<div>");                                                                                                     // Creating a div for today's weather information.
-            todaysForecastDiv.css({"border":"solid black 1px"});                                                                                    // Adding css border to the div.
+            todaysForecastDiv.css({"border":"solid black 1px", "background-color":"#0D6EFD", "color":"white"});                                                                                    // Adding css border to the div.
 
             // City Name
             var todaysForecastCity = $("<h2>");                                                                                                     // Creating a h2 element for the city name.
@@ -84,7 +84,7 @@ $(document).ready(function() {
         .then(function (data) {                                                                                                                     // Accessing the returned data after being converted.
             console.log(data)
             for (var i = 0; i < data.list.length; i++) {                                                                                            // Iterating through the data one by one.
-                if (data.list[i].dt_txt.includes("00:00:00")) {                                                                                     // Checking if the the date/time text includes 00:00:00 - to make sure we're only getting 5 days.
+                if (data.list[i].dt_txt.includes("12:00:00")) {                                                                                     // Checking if the the date/time text includes 00:00:00 - to make sure we're only getting 5 days.
 
                     console.log(data.list[i]);
                     var eachDate = dayjs.unix(data.list[i].dt).format("DD-MM-YYYY");                                                                // Setting the eachDate variable to the unix timestamp from data iteration and formatting it using dayJS.
@@ -113,11 +113,11 @@ $(document).ready(function() {
                     // 5-day Forecast Card Body's
                     var multiDayForecastCardBody = $("<div>");                                                                                      // Setting the Forecast Cards' Body.
                     multiDayForecastCardBody.addClass("card-body");                                                                                 // Adding bootstrap class - card-body.
-                    multiDayForecastCardBody.css({"text-align":"center"})                                                                           // Adding css to centre align content.
+                    multiDayForecastCardBody.css({"text-align":"center", "background-color":"#0D6EFD", "color":"white"})                                                                           // Adding css to centre align content.
                     multiDayForecastCard.append(multiDayForecastCardBody);                                                                          // Appending the card body to the forecast card.
 
                     // 5-day Forecast Card Title
-                    var multiDayForecastCardTitle = $("<h5>");                                                                                      // Setting the Forecast Cards' Title.
+                    var multiDayForecastCardTitle = $("<h6>");                                                                                      // Setting the Forecast Cards' Title.
                     multiDayForecastCardTitle.addClass("card-title");                                                                               // Adding bootstrap class - card-title.
                     multiDayForecastCardTitle.text("(" + eachDate + ")");                                                                           // Adding the eachDate variable to the title text.
                     multiDayForecastCardBody.append(multiDayForecastCardTitle);                                                                     // Appening the card title to the forecast card body.
@@ -215,6 +215,10 @@ $(document).ready(function() {
         var forecastCityName = $(event.target).text();
         $("#today").empty();
         $("#forecast").empty();
+        $("#forecast").css({"display":"flex", "justify-content":"space-between"});                                                              // Making the forecast div use flex and space the content within between.
+        var forecastH4 = $("<h4>");                                                                                                             // Creating a h4 tag.
+        forecastH4.text("5-Day Forecast");                                                                                                      // Setting the text of the h4 tag.
+        $("#forecast").append(forecastH4);                                                                                                      // Appending the h4 tag to the forecast div.
         displayWeatherToday(cityName);
         displayForecast(forecastCityName);
     });
